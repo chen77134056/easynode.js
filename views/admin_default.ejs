@@ -1,0 +1,70 @@
+<!--进入管理后台首页-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+
+
+      <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css" />
+      <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css" />
+      <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
+      <link rel="stylesheet" type="text/css" href="/dist/css/wangEditor.min.css">
+
+      <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+      <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+      <script type="text/javascript" src="/plupload/lib/plupload/plupload.full.min.js"></script>
+
+
+
+
+  </head>
+  <body class="easyui-layout">
+
+
+
+    <div data-options="region:'north',title:'header',noheader:true" style="height:60px;border: 1px solid #95B8E7;    background-color: #E0ECFF;">
+        <div class="logo">后台管理</div>
+        <div class="logout">您好， | <a id="admin_out" style="cursor: pointer;">退出</a></div>
+    </div>
+    <div data-options="region:'south',title:'footer',noheader:true" style="height:35px;line-height:30px;text-align:center;">
+        &copy;2016-2017 感谢使用easynode.js
+    </div>
+    <div data-options="region:'west',title:'导航',split:true,iconCls:'icon-world'" style="width:180px;padding:10px;">
+        <ul id="nav"></ul>
+    </div>
+    <div data-options="region:'center'" style="overflow:hidden;">
+        <div id="tabs">
+            <div title="起始页" iconCls="icon-house" style="padding:0 10px;display:block;">
+                欢迎来到后台管理系统！
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js" ></script>
+    <script type="text/javascript" src="/javascripts/admin.js"></script>
+    <script type="text/javascript" src="/dist/js/wangEditor.min.js"></script>
+    <script>
+        $('#admin_out').click(function () {
+
+            location.href='/admin/admin_out';
+
+
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

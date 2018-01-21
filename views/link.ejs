@@ -1,0 +1,64 @@
+
+
+<table id="link_list"></table>
+
+
+<div id="link_list_tool" style="padding:5px;">
+    <div style="margin-bottom:5px;">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="link_list_tool.reload();">刷新</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add-new" onclick="link_list_tool.add();">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit-new" onclick="link_list_tool.edit();">修改</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-delete-new" onclick="link_list_tool.remove();">删除</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" id="save" onclick="obj.save();">保存</a>-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" id="redo" onclick="obj.redo();">取消编辑</a>-->
+
+    </div>
+    <!--<div style="padding:0 0 0 7px;color:#333;">-->
+        <!--查询内容：<input type="text" class="textbox" name="search_title" style="width:150px">-->
+        <!--&lt;!&ndash;创建时间从：<input type="text" name="date_from" class="easyui-datebox" editable="false" style="width:110px">&ndash;&gt;-->
+        <!--&lt;!&ndash;到：<input type="text" name="date_to" class="easyui-datebox" editable="false" style="width:110px">&ndash;&gt;-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="category_list_tool.search();">查询</a>-->
+
+    <!--</div>-->
+</div>
+
+
+
+
+<form id="add_link" style="margin:0;padding:5px 0 0 25px;color:#333;">
+
+    <p>u r l ：<input id="link_url" type="text" name="link_url" class="textbox" placeholder="http://www.xgllseo.com"></p>
+    <p>名称 ：<input id="link_title" type="text" name="link_title" class="textbox" placeholder="链接名称"></p>
+
+    <p>添加图片：<iframe scrolling="no" frameborder=no id="iframe" height="30" width="200" src="/admin/link_upfile"></iframe>
+        <span class="prompt_span" style="display: block;">&nbsp;</span>
+    </p>
+    <input id="link_img" type="text" name="link_img" class="textbox" style="display: none;">
+</form>
+
+
+<form id="edit_link" style="margin:0;padding:5px 0 0 25px;color:#333;">
+    <p style="display: none;">链接&nbsp;I&nbsp;D：<input type="text" value="" name="link_id" id="link_id" readonly="readonly" class="textbox"></p>
+    <p>url：<input id="link_url2" type="text" name="link_url2" class="textbox" placeholder="http://www.xgllseo.com"></p>
+    <p>名称：<input id="link_title2" type="text" name="link_title2" class="textbox" placeholder="链接名称"></p>
+
+    <p>添加图片：<iframe scrolling="no" frameborder=no id="iframe" height="30" width="200" src="/admin/link_upfile"></iframe>
+       <span class="prompt_span" style="display: block;">&nbsp;</span>
+    </p>
+    <input id="link_img2" type="text" name="link_img2" class="textbox" style="display: none;">
+fs</form>
+
+
+
+<script>
+   function upload_success() {
+       $('.prompt_span').text('上传完成');
+   }
+
+
+
+</script>
+
+
+
+<script type="text/javascript" src="/javascripts/admin_right.js"></script>

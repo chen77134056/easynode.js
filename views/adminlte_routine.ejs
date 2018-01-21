@@ -1,0 +1,171 @@
+<!--显示文章列表-->
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/iCheck/all.css">
+
+
+
+<section class="content-header">
+    <h1>
+        常规
+        <small>Version 1.0</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+   <div class="row">
+         <div class="col-md-6">
+                         <div class="box box-primary">
+
+                             <!-- /.box-header -->
+                             <!-- form start -->
+
+                                 <div class="box-body">
+                                     <div class="form-group">
+                                         <label for="exampleInputEmail1">网站标题</label>
+                                         <input type="text" class="form-control" id="web_title">
+                                     </div>
+
+
+
+                                     <div class="form-group">
+                                         <label for="exampleInputEmail1">首页显示文章数</label>
+                                         <input type="text" class="form-control" id="home_post_num">
+                                     </div>
+
+
+                                 </div>
+                                 <!-- /.box-body -->
+
+                                 <div class="box-footer">
+                                     <button id="set_up" type="submit" class="btn btn-primary">更新</button>
+                                     <span class="text-red set_up_success" style="padding-left: 20px;display: none;">设置成功</span>
+                                 </div>
+
+                         </div>
+
+
+
+
+
+
+                         <div class="box box-primary">
+
+                             <!-- /.box-header -->
+                             <!-- form start -->
+
+                             <div class="box-body">
+
+
+                                 <div class="row">
+                                     <div class="col-xs-6">
+                                         <div class="form-group">
+                                             <label for="exampleInputPassword1">系统时间</label>
+                                             <input type="text" class="form-control" id="system_time" placeholder="时间格式必须是：2017-06-29 16:23:23">
+                                         </div>
+                                     </div>
+
+                                     <div class="col-xs-6">
+                                         <div class="form-group">
+                                             <label for="exampleInputPassword1">当前系统时间</label>
+                                             <input type="text" class="form-control"  id="current_time" disabled="disabled">
+                                         </div>
+                                     </div>
+                                 </div>
+
+
+
+
+
+                             </div>
+                             <!-- /.box-body -->
+
+                             <div class="box-footer">
+                                 <a class="btn btn-primary" id="change_time_bt">更新</a>
+                                 <span class="text-red set_up_success2" style="padding-left: 20px;display: none;">设置成功</span>
+                             </div>
+
+                         </div>
+
+
+
+
+
+
+         </div>
+           <div class="col-md-6">
+    2
+           </div>
+   </div>
+<!-- /.box -->
+</section>
+
+
+<script>
+
+   $(function () {
+//转意符换成普通字符
+       function escape2Html(str) {
+           var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+           return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+       }
+       $.ajax({
+           type:'get',
+           async:false,
+           url:'/admin/routine',
+           dataType : 'json',
+           success:function (data) {
+               $('#web_title').val( escape2Html( data[0].title )  );
+               $('#home_post_num').val(data[0].home_post_num);
+               $('#system_time').val(data[0].system_time);
+               $('#current_time').val(data[1]);
+           }
+       });
+
+
+       $('#set_up').click(function () {
+             $.ajax({
+                 type:'post',
+                 async:false,
+                 url:'/admin/routine',
+                 data:{
+                     title:$('#web_title').val(),
+                     home_post_num:$('#home_post_num').val()
+                 },
+                 dataType : 'json',
+                 success:function (data) {
+                     $('.set_up_success').show();
+                 }
+             });
+
+       });
+
+
+       $('#change_time_bt').click(function () {
+           $.ajax({
+               type:'post',
+               async:false,
+               url:'/admin/routine_time',
+               data:{
+                   system_time:$('#system_time').val()
+               },
+
+               success:function (data) {
+                   $('.set_up_success2').show().text(data);
+
+               },
+               error:function (data) {
+                   $('.set_up_success2').show().text('时间设置失败，线上环境需要是ubuntu或者centos');
+
+               }
+           });
+
+       });
+
+   });
+
+</script>

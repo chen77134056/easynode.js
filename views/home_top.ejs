@@ -1,0 +1,114 @@
+
+
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title><%- title() %></title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+
+      <script src="/javascripts/jquery-1.8.2.min.js"></script>
+      <script>
+          $(function () {
+                          function changurl(sHtml) {
+                              return sHtml.replace(/\//ig,'%2f');
+                          }
+
+
+                          $('#search_bt').click(function () {
+
+                              if(/^$/.test($('#search_name').val())){
+                                  window.location.href='/';
+                              }else{
+                                  $.ajax({
+                                      type:'get',
+                                      url:'/search/'+$('#search_name').val()+'/1',
+                                      success:function (data) {
+
+                                          window.location.href='/search/'+changurl($('#search_name').val())+'/1';
+                                      }
+                                  });
+                              }
+                              return false;
+                          });
+
+
+                          $('#tab_list .tab_title div').click(function () {
+                                  $('.tab_con').eq( $(this).index() ).addClass('show').siblings().removeClass('show');
+                                  $(this).addClass('hover').siblings().removeClass('hover');
+                          });
+
+
+                          $('#search_name').focus(function () {  //搜索框回车键，即可搜索结果
+                              $(this).keydown(function (e) {
+                                  if(e.keyCode==13){
+                                      $('#search_bt').trigger('click');
+                                  }
+                              });
+                          });
+
+
+
+          });
+      </script>
+  </head>
+  <body>
+
+
+  <% if(parseFloat(login_state)){ %>
+      <div id="edit_tool">
+          <div class="add_bt"> <span><font>+</font>新建</span>
+              <ul>
+                  <li><a href="/admin/a/add_post">添加文章</a></li>
+                  <li><a href="/admin/a/category">添加文章分类</a></li>
+                  <li><a href="/admin/a/link">添加链接</a></li>
+                  <li><a href="/admin/a/routine">常规设置</a></li>
+                  <li><a href="/admin/a/all_collection">采集</a></li>
+              </ul>
+          </div>
+          <a id="out_a" href="/admin/admin_out">退出登陆</a>
+      </div>
+      <div style="height: 32px;"></div>
+  <%}%>
+
+
+
+  <div id="nav_wrap">
+      <div class="nav_inside">
+
+          <a href="/" id="logo2">E</a>
+
+          <div id="search">
+              <input type="text" name="search_name" id="search_name">
+              <button id="search_bt"></button>
+          </div>
+
+          <!--<ul id="nav">-->
+              <!--<li><a class="hover">HOME</a></li>-->
+              <!--<li><a>ABOUT</a></li>-->
+              <!--<li><a>PORTFOLIO</a></li>-->
+              <!--<li><a>CONTACT</a></li>-->
+          <!--</ul>-->
+
+          <%- include home_nav %>
+
+
+      </div>
+  </div>
+
+
+  <div id="nav_top_img">
+
+  </div>
+
+
+  <div id="wrap_con">
+
+      <div id="logo">
+          <h1><a>BLOG</a></h1>
+          <h2>What we Think , latest news</h2>
+      </div>
+
+

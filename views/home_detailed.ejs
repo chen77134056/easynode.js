@@ -1,0 +1,49 @@
+<!--内容详细页-->
+
+<%- include home_top %>
+
+
+
+<div id="con">
+    <div class="con_l">
+
+        <ul id="post_list">
+            <li>
+
+
+                <div class="post_info">
+
+                    <h3><%- post_title %></h3>
+                    <span class="time">发布时间：<%- time %></span>
+                    <span class="cate">分类： <%- category %></span>
+                    <% if(parseFloat(login_state)){ %>
+                       <span><a target="_blank" href="/admin/a/post_edit?id=<%= post_id %>">编辑此文章</a></span>
+                    <%}%>
+                </div>
+
+                <div id="detailed_con">
+                    <%- post_con %>
+                </div>
+
+
+
+            </li>
+
+        </ul>
+
+
+
+    </div>
+
+
+    <%- include home_side %>
+</div>
+
+
+
+
+
+
+<%- include home_foot %>
+
+

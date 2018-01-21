@@ -1,0 +1,27 @@
+
+<ul id="nav">
+    <li><a class="hover" href="/">首页</a></li>
+
+    <%for(var i=0;i<home_nav.length;i++){%>
+    <li class="li_1">
+        <a href="/cat/<%= home_nav[i].pa %>/"><%= home_nav[i].pa %></a>
+        <% if (home_nav[i].son != null) {%>
+            <ul>
+                <% for(x of home_nav[i].son) {%>
+                   <span><a href="/cat/<%= x %>"><%= x %></a></span>
+                <% } %>
+            </ul>
+        <%}%>
+
+
+    </li>
+    <%}%>
+
+</ul>
+
+
+
+
+
+
+

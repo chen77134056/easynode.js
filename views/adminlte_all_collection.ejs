@@ -1,0 +1,190 @@
+<!--总体概况-->
+
+<!-- Main content -->
+<section class="content-header">
+    <h1>
+        批量采集
+        <small>Version 1.0</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+
+
+
+<section class="content">
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">开始采集地址</label>
+                        <input type="text" class="form-control" id="start_url" placeholder="例如：http://www.easynode.cn/p.php?page=1">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">结束采集地址</label>
+                        <input type="text" class="form-control" id="end_url" placeholder="例如：http://www.easynode.cn/p.php?page=10">
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">分页参数</label>
+                                <input type="text" class="form-control" id="key_word" placeholder="例如：page=">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">默认每页一共几条数据(索引为1)</label>
+                                <input type="text" class="form-control" id="page_total_num" placeholder="例如：10">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">从开始采集地址的第几条数据开始（索引为0）</label>
+                                <input type="text" class="form-control" id="start_url_id" placeholder="例如：1">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">从结束采集地址的第几条数据结束（索引为0）</label>
+                                <input type="text" class="form-control" id="end_url_id" placeholder="例如：10">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">采集内容dom</label>
+                                <input type="text" class="form-control" id="post_list" placeholder="例如：.main ul li 或者#main dl dd">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">采集列表页的a连接(必须为a标签)</label>
+                                <input type="text" class="form-control" id="post_a_url" placeholder="例如：.main ul li a">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="row" style="padding-top:50px;">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">标题</label>
+                                <input type="text" class="form-control" id="post_title" placeholder="例如：#title或者.title">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">时间</label>
+                                <input type="text" class="form-control" id="post_time" placeholder="例如：#time或者.time">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">内容</label>
+                                <input type="text" class="form-control" id="post_content" placeholder="例如：#content或者.content">
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">分类</label>
+                                <input type="text" class="form-control" id="post_category" placeholder="例如：其他或者电影">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+                <div class="box-footer">
+                    <a id="single_collection" class="btn btn-primary">采集</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <pre>
+案例：
+//要采集网站的dom结构
+&lt;body&gt;
+    &lt;div class=&quot;title&quot;&gt;标题内容&lt;/div&gt;
+    &lt;span class=&quot;time&quot;&gt;2013-11-11&lt;/span&gt;
+    &lt;span class=&quot;category&quot;&gt;分类：电影&lt;/span&gt;
+    &lt;div id=&quot;content&quot;&gt;内容&lt;/div&gt;
+&lt;/body&gt;</pre>
+
+
+        </div>
+    </div>
+
+
+</section>
+
+<script>
+    $(function () {
+         $('#single_collection').click(function () {
+              $.ajax({
+                  type:'post',
+                  data:{
+                      start_url:$('#start_url').val(),
+                      end_url:$('#end_url').val(),
+                      key_word:$('#key_word').val(),
+                      start_url_id:$('#start_url_id').val(),
+                      end_url_id:$('#end_url_id').val(),
+                      post_list:$('#post_list').val(),
+                      post_a_url:$('#post_a_url').val(),
+                      post_category:$('#post_category').val() || '其他',
+
+                      post_title:$('#post_title').val(),
+                      post_time:$('#post_time').val(),
+                      post_content:$('#post_content').val(),
+                      page_total_num:$('#page_total_num').val()
+                  },
+                  url:'/admin/all_collection',
+                  success:function (data) {
+                      console.log(data)
+                      alert('数据插入成功');
+                  }
+              });
+              return false;
+         });
+    });
+</script>
+

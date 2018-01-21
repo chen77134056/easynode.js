@@ -1,0 +1,50 @@
+
+<div class="con_r">
+    <div id="cate_list">
+        <div class="tit">分类目录</div>
+        <ul>
+            <%for(var i=0;i<nav.length;i++){%>
+            <li><a href="/cat/<%= nav[i].text %>/"><%= nav[i].text %></a>  <span>(<%= nav[i].count %>)</span></li>
+            <%}%>
+
+        </ul>
+    </div>
+
+
+    <div id="tab_list">
+        <div class="tab_title">
+            <div class="hover">其他</div>
+            <div>新闻</div>
+            <div>分类</div>
+        </div>
+        <ul class="tab_con show">
+
+            <%  (function(num){ %>
+                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+                      <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+                <%  }%>
+            <%})(1);%>
+
+        </ul>
+        <ul class="tab_con">
+            <%  (function(num){ %>
+                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+                  <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+                <%  }%>
+            <%})(0);%>
+        </ul>
+
+
+        <ul class="tab_con">
+            <%  (function(num){ %>
+                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+                   <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+                <%  }%>
+            <%})(2);%>
+        </ul>
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,88 @@
+<%- include home_top %>
+
+
+
+
+
+
+
+
+
+
+
+<div id="con">
+    <div class="con_l">
+        <h3 class="prompt">当前分类目录：<%- search_name %> </h3>
+        <ul id="post_list">
+
+            <%if(!!post_list.length){%>
+            <% for(var i=0;i<post_list.length;i++){ %>
+            <li>
+
+
+                <div class="post_info">
+
+                    <a href="/p/<%= post_list[i]._id %>"><h3><%=  escape2Html(post_list[i].post_title) %></h3></a>
+                    <span class="time"><%= post_list[i].time %></span>
+                    <span class="cate">分类：<%= post_list[i].category %></span>
+                    <%if(parseFloat(login_state)){%>
+                    <span><a target="_blank" href="/admin/a/post_edit?id=<%= post_list[i]._id %>">编辑此文章</a></span>
+                    <%}%>
+                </div>
+
+                <div class="des_con">
+                    <a>
+
+                        <div class="img">
+                            <table border="0" cellpadding="0" cellspacing="0" style="height: 100%;width: 100%">
+                                <tr style="height: 100%;">
+                                    <td align="center" valign="middle" style="text-align:center;vertical-align:middle;height: 100%">
+
+
+                                        <%
+
+                                            var img_str= post_list[i].post_con.match(/<img.*?(?:>|\/>)/i);
+                                            if(img_str instanceof Array){
+                                                img_str=((img_str)[0].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i))[1];
+                                            }else{
+                                                img_str='/images/default.jpg'
+                                            }
+
+                                        %>
+                                        <img src="<%- img_str %>" onload="if(this.width>this.height){this.style.width='100%'}else{this.style.height='143px'}">
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <%- cutString(clearbr(post_list[i].post_con.replace(/<[^<>]+?>/g,'')).replace(/(^\s+)|(\s+$)/g,"").replace(/\s/g,""),150)  %>
+                    </a>
+                </div>
+
+
+
+            </li>
+            <% } %>
+            <%}else{%>
+            <p style="padding-top: 20px;">您搜索的内容不存在</p>
+            <%}%>
+
+        </ul>
+
+        <% include home_page.ejs %>
+
+    </div>
+
+    <%- include home_side %>
+</div>
+
+
+
+
+
+
+<%- include home_foot %>
+
+

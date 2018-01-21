@@ -1,0 +1,31 @@
+/**
+ * Created by xgllseo on 2017/4/6.
+ */
+var MongoClient = require('mongodb').MongoClient;
+var DB_CONN_STR = 'mongodb://localhost:27017/xgllseo';
+// MongoClient.connect(DB_CONN_STR,async function(err, db) {
+//
+//     if(err){
+//         console.log('连接数据库失败');
+//     }else{
+//         console.log('连接数据库成功');
+//         db.collection('admin').insert([{"name":'wilson001',"age":21}],function (err2, result) {
+//             if(err2){
+//                 console.log('插入数据失败');
+//             }else{
+//                 console.log(result); //显示插入成功后的数据
+//                 db.close();
+//             }
+//         });
+//     }
+//
+// });
+
+function db(fn,ctx) {
+        MongoClient.connect(DB_CONN_STR,function (err, db) {
+            fn(db,ctx);
+        });
+}
+
+
+module.exports = db;

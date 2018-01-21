@@ -1,0 +1,40 @@
+
+
+<table id="category_list"></table>
+
+
+<div id="category_list_tool" style="padding:5px;">
+    <div style="margin-bottom:5px;">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="category_list_tool.showall();">分类统计</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add-new" onclick="category_list_tool.add();">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit-new" onclick="category_list_tool.edit();">修改</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-delete-new" onclick="category_list_tool.remove();">删除</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" id="save" onclick="obj.save();">保存</a>-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" id="redo" onclick="obj.redo();">取消编辑</a>-->
+        &nbsp;&nbsp;&nbsp;某分类的所有内容：<input id="single_category" class="textbox" name="single_category">
+    </div>
+    <!--<div style="padding:0 0 0 7px;color:#333;">-->
+        <!--查询内容：<input type="text" class="textbox" name="search_title" style="width:150px">-->
+        <!--&lt;!&ndash;创建时间从：<input type="text" name="date_from" class="easyui-datebox" editable="false" style="width:110px">&ndash;&gt;-->
+        <!--&lt;!&ndash;到：<input type="text" name="date_to" class="easyui-datebox" editable="false" style="width:110px">&ndash;&gt;-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="category_list_tool.search();">查询</a>-->
+
+    <!--</div>-->
+</div>
+
+
+
+<form id="add_category" style="margin:0;padding:5px 0 0 25px;color:#333;">
+
+    <p>文章分类：<input id="cat_title" type="text" name="cat_title" class="textbox"></p>
+
+</form>
+
+
+<form id="edit_category" style="margin:0;padding:5px 0 0 25px;color:#333;">
+    <p>分类&nbsp;I&nbsp;D：<input type="text" value="" name="cat_id" id="cat_id" readonly="readonly" class="textbox"></p>
+    <p>文章分类：<input id="cat_title2" type="text" name="cat_title" class="textbox"></p>
+
+</form>
+
+<script type="text/javascript" src="/javascripts/admin_right.js"></script>

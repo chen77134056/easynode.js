@@ -1,0 +1,400 @@
+<!--显示分类列表-->
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/iCheck/all.css">
+<style>
+    tr{height: 100%;}
+    .table>tbody>tr>td{vertical-align:middle;}
+</style>
+<style>
+    .edit_a{text-align: center}
+</style>
+
+
+<section class="content-header">
+    <h1>
+        链接
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="box">
+    <div style="padding: 10px;">
+        <a id="add_link_a" class="btn btn-success">添加</a>
+        <a id="delete_post" class="btn btn-danger">删除</a>
+        <button type="button" id="allcheck" class="btn btn-warning ">全选</button>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+
+        <table id="post_data" class="display table table-bordered table-striped" cellspacing="0" width="100%">
+            <thead>
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th>名称</th>
+                <th>url</th>
+                <th>图片</th>
+
+
+            </tr>
+
+            </thead>
+        </table>
+
+    </div>
+    <!-- /.box-body -->
+</div>
+
+
+    <!--添加分类弹窗-->
+   <div id="add_link" style="display: none;">
+       <div class="box box-primary">
+           <div class="box-header with-border">
+               <h3 class="box-title">添加链接</h3>
+           </div>
+           <div class="box-body">
+               <div class="form-group">
+                   <label>名称：</label>
+                   <input id="link_title" type="text" class="form-control">
+               </div>
+               <div class="form-group">
+                   <label>url：</label>
+                   <input id="link_url" type="text" class="form-control">
+               </div>
+               <div class="form-group">
+                   <a onclick="choose_file.call(this)" class="btn btn-social btn-default" style="background: #fff;border-color: #d2d6de;">
+                       <i class="fa fa-instagram"></i>添加媒体
+                   </a>
+
+                   <a onclick="start_up.call(this)" class="btn btn-primary" style="height: 34px;background: #fff;border-color: #d2d6de;color: #444;">上传</a>
+                   <a class="text-red success_text" style="display: none;">上传成功</a>
+                   <iframe class="iframe" src="/admin/link_upfile" style="display: none;"></iframe>
+                   <input  type="text" id="link_img2" style="display: none;">
+               </div>
+           </div>
+           <div class="box-footer text-center">
+               <a id="add_link_ok" class="btn btn-primary">更新</a>
+               <a class="btn btn-default" onclick="layer.close(layer.index);">取消</a>
+           </div>
+
+           <div class="overlay" style="display: none;">
+               <i class="fa fa-refresh fa-spin"></i>
+           </div>
+
+       </div>
+   </div>
+
+
+
+
+    <!--修改分类弹窗-->
+    <div id="edit_link_data" style="display: none;">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">修改分类</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <label>名称：</label>
+                    <input id="link_title2" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>url：</label>
+                    <input id="link_url2" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <a onclick="choose_file.call(this)" class="btn btn-social btn-default" style="background: #fff;border-color: #d2d6de;">
+                        <i class="fa fa-instagram"></i>添加媒体
+                    </a>
+
+                    <a onclick="start_up.call(this)" class="btn btn-primary" style="height: 34px;background: #fff;border-color: #d2d6de;color: #444;">上传</a>
+                    <a class="text-red success_text" style="display: none;">上传成功</a>
+
+                    <iframe src="/admin/link_upfile" style="display: none;"></iframe>
+
+                </div>
+            </div>
+            <div class="box-footer text-center">
+                <a id="edit_category_ok" class="btn btn-primary">更新</a>
+                <a class="btn btn-default" onclick="layer.close(layer.index);">取消</a>
+            </div>
+
+            <div class="overlay" style="display: none;">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="delete_warning" style="display: none;background: #fff;">
+        <div class="modal-warning">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" onclick="layer.close(layer.index);">×</span></button>
+                        <h4 class="modal-title">警告</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>是否确定删除数据？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="delete_ok" type="button" class="btn btn-outline pull-left">确定</button>
+                        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="layer.close(layer.index);">取消</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+
+
+
+<!-- /.box -->
+</section>
+
+<script src="/layer/layer.js"></script>
+<script>
+       function reload_media() {
+
+       }
+
+       function upload_success() {
+           $('.overlay').hide();
+           $('.success_text').show();
+       }
+
+
+
+
+       //选择上传文件
+       function choose_file() {
+           $($(this).next().next().next()[0].contentDocument).find('body').find('#xFile').trigger('click');
+       }
+
+
+
+
+       //开始上传
+       function start_up() {
+           $($(this).next().next()[0].contentDocument).find('body button').trigger('click');
+       }
+
+
+
+
+        var post_data=$("#post_data").on( 'init.dt', function () {
+
+            edit_category_a();
+            $('#category_text').val();
+        } ).DataTable({
+            "processing": true,
+            "serverSide": true,
+            "createdRow":function () {
+                check_switch=1;
+            },
+            "ajax": "/admin/link_json",
+            "columns": [
+                {
+                    "data": "_id",
+                    //defaultContent: '<div class="form-group"><label><input type="checkbox" class="minimal"></label></div>',
+                    "render": function ( data, type, full, meta ) {
+                        return '<input type="checkbox" class="minimal" value="'+data+'">';
+                    },
+                    orderable: false
+                },
+                {"data": "_id",
+                    className:'edit_a',
+                    "render": function ( data, type, full, meta ) {
+                        return '<a style="cursor: pointer" class="edit_link_a" data-id="'+data+'"><i class="fa fa-edit"></i><span class="pull-right-container"></span>编辑</a>';
+                    }
+                },
+                { "data": "title" },
+                { "data": "url" },
+                { "data": "img",
+                  "render": function ( data, type, full, meta ) {
+                      console.log(data)
+                      return '<img height="60" src="/uploads/'+new Date().getFullYear()+'/'+(new Date().getMonth()+1)+'/'+data+'">'
+                  }
+                }
+            ],
+            "initComplete":function () {
+
+            },
+            "drawCallback": function( settings ) {
+                //var api = this.api();
+
+                // Output the data for the visible rows to the browser's console
+               // console.log( api.rows( {page:'current'} ).data() );
+            }
+
+
+        });
+
+
+
+        var check_switch=1;
+    //全选按钮
+    (function () {
+
+        $('#allcheck').click(function () {
+            if(check_switch){
+                $('#post_data input[type=checkbox]').prop("checked", true);
+                check_switch=0;
+            }else{
+                $('#post_data input[type=checkbox]').prop("checked", false);
+                check_switch=1;
+            }
+
+        });
+    })();
+
+
+
+
+    //删除按钮
+    $('#delete_post').click(function () {
+          var ids = [];
+          $('#post_data input[type=checkbox]:checked').each(function (a,b) {
+
+              if(b.value==1){  //禁止把'其他'这个分类删除
+                  //continue;
+              }else{
+                  ids[a]=parseFloat(b.value);
+              }
+          });
+
+            console.log(ids);
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: '600px',
+                skin: 'layui-layer-nobg', //没有背景色
+                content: $('#delete_warning')
+            });
+
+
+
+
+            $('#delete_ok').click(function () {
+                $.ajax({
+                    url:"/admin/remove_link",
+                    type:'post',
+                    async:false,
+                    dataType : 'json',
+                    data:{remove_id:ids},
+                    success:function (data) {
+//                        layer.close(layer.index);
+//                        post_data.ajax.url( '/admin/post_json' ).load();
+                       window.location.reload();
+                    }
+                });
+            });
+    });
+
+
+
+    //添加数据弹窗
+    $('#add_link_a').click(function () {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: '600px',
+            skin: 'layui-layer-nobg', //没有背景色
+            content: $('#add_link')
+        });
+    });
+
+    //添加数据 插入数据库中
+    $('#add_link_ok').click(function () {
+        console.log(  $('#link_img2').val() );
+        $.ajax({
+            url:"/admin/add_link",
+            type:'post',
+            async:false,
+            dataType : 'json',
+            data:{
+                url:$('#link_url').val(),
+                title:$('#link_title').val(),
+                img:$('#link_img2').val()
+            },
+            success:function (data) {
+                window.location.reload();
+                $('#edit_category').val('');
+            }
+        });
+    });
+
+
+
+
+        //编辑弹窗
+        function edit_category_a() {
+            $('.edit_link_a').click(function () {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: '600px',
+                    skin: 'layui-layer-nobg', //没有背景色
+                    content: $('#edit_link_data')
+                });
+
+
+                $.ajax({
+                    url:"/admin/edit_link",
+                    type:'post',
+                    async:false,
+                    dataType : 'json',
+                    data:{post_id:$(this).data('id')},
+                    success:function (data) {
+                        console.log(data)
+                        //layer.close(layer.index);
+                       // post_data.ajax.reload();
+                       // $('#edit_category').val('');
+                           $('#link_url2').val(data[0].url);
+                           $('#link_title2').val(data[0].title);
+                    }
+                });
+
+                //更新 分类名称
+                $('#edit_category_ok').click([$(this).data('id')],function (e) {
+                    $.ajax({
+                        url:"/admin/update_link",
+                        type:'post',
+                        async:false,
+                        dataType : 'json',
+                        data:{
+                            post_id:e.data[0],
+                            url:$('#link_url2').val(),
+                            title:$('#link_title2').val(),
+                            img:$('#link_img2').val()
+                        },
+                        success:function (data) {
+                            window.location.reload();
+                             $('#edit_category').val('');
+                        }
+                    });
+                });
+                
+                
+            });
+
+        }
+
+
+
+</script>

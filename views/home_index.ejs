@@ -1,0 +1,113 @@
+<%- include home_top %>
+
+
+
+
+
+    <div id="con">
+        <div class="con_l">
+
+            <ul id="post_list">
+
+                    <% for(var i=0;i<post_list.length;i++){ %>
+
+                            <div class="post_info">
+
+                                <a href="/p/<%= post_list[i]._id %>"><h3><%=  escape2Html(cutString(post_list[i].post_title,30)) %></h3></a>
+                                <span class="time"><%= post_list[i].time %></span></span>
+                                <span class="cate">分类：<%= post_list[i].category %></span>
+                                <%if(parseFloat(login_state)){%>
+                                  <span><a target="_blank" href="/admin/a/post_edit?id=<%= post_list[i]._id %>">编辑此文章</a></span>
+                                <%}%>
+
+                            </div>
+
+                            <div class="des_con">
+                                <a>
+                                    <div class="img">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height: 100%;width: 100%">
+                                            <tr style="height: 100%;">
+                                                <td align="center" valign="middle" style="text-align:center;vertical-align:middle;height: 100%;overflow: hidden;">
+                                                    <%
+
+                                                      var img_str= post_list[i].post_con.match(/<img.*?(?:>|\/>)/i);
+                                                      if(img_str instanceof Array){
+                                                          img_str=((img_str)[0].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i))[1];
+                                                      }else{
+                                                          img_str='/images/default.jpg'
+                                                      }
+
+                                                    %>
+                                                    <img style="visibility:hidden" src="<%- img_str %>" onload="this.style.visibility='visible';if(this.width>this.height){this.style.width='100%'}else{this.style.height='143px'}">
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                    <%- cutString(clearbr(post_list[i].post_con.replace(/<[^<>]+?>/g,'')).replace(/(^\s+)|(\s+$)/g,"").replace(/\s/g,""),150)  %>
+                                </a>
+                            </div>
+
+                    <% } %>
+
+            </ul>
+
+
+
+
+
+
+
+
+
+        <% include home_page.ejs %>
+
+
+        </div>
+
+
+
+        <% include home_side.ejs %>
+    </div>
+
+
+
+
+<script type="text/javascript">
+    //思路分两步：作者（yanue）.
+    //1，匹配出图片img标签（即匹配出所有图片），过滤其他不需要的字符
+    //2.从匹配出来的结果（img标签中）循环匹配出图片地址（即src属性）
+     var str = "<img src='http://yourweb.com/test.jpg' width='50' >"
+    //匹配图片（g表示匹配所有结果i表示区分大小写）
+     var imgReg = /<img.*?(?:>|\/>)/i;
+    //匹配src属性
+    var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+    var arr = str.match(/<img.*?(?:>|\/>)/i);
+   //alert('所有已成功匹配图片的数组：'+arr);
+    var src = ((str.match(/<img.*?(?:>|\/>)/i))[0].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i))[1];
+   //alert(((str.match(/<img.*?(?:>|\/>)/i))[0].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i))[1]);
+    // document.title=((str.match(/<img.*?(?:>|\/>)/i))[0].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i))[1]
+    for (var i = 0; i < arr.length; i++) {
+        var src = arr[i].match(srcReg);
+        //获取图片地址
+        if(src[1]){
+          //  alert('已匹配的图片地址'+(i+1)+'：'+src[1]);
+        }
+        //当然你也可以替换src属性
+        if (src[0]) {
+            var t = src[0].replace(/src/i, "href");
+            //alert(t);
+        }
+    }
+
+
+
+
+</script>
+
+
+
+
+<%- include home_foot %>
+
+

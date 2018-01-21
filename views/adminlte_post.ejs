@@ -1,0 +1,191 @@
+<!--显示文章列表-->
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="/AdminLTE-2.3.7/plugins/iCheck/all.css">
+
+<style>
+    .edit_a{text-align: center;width: 100px;}
+    .time{width: 100px;}
+    .post_check{width: 10px;}
+    ._id{width: 50px;}
+</style>
+
+
+<section class="content-header">
+    <h1>
+        文章列表
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="box">
+    <div style="padding: 10px;">
+        <a href="add_post" id="add_post" class="btn btn-success">添加</a>
+        <a id="delete_post" class="btn btn-danger">删除</a>
+        <button type="button" id="allcheck" class="btn btn-warning ">全选</button>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+
+        <table id="post_data" class="display table table-bordered table-striped" cellspacing="0" width="100%">
+            <thead>
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th>_id</th>
+                <th>标题</th>
+                <th>分类</th>
+                <th>时间</th>
+
+            </tr>
+
+            </thead>
+        </table>
+
+    </div>
+    <!-- /.box-body -->
+</div>
+
+
+    <div id="delete_warning" style="display: none;background: #fff;">
+        <div class="modal-warning">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" onclick="layer.close(layer.index);">×</span></button>
+                        <h4 class="modal-title">警告</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>是否确定删除数据？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="delete_ok" type="button" class="btn btn-outline pull-left">确定</button>
+                        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="layer.close(layer.index);">取消</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+
+
+
+<!-- /.box -->
+</section>
+
+<script src="/layer/layer.js"></script>
+<script>
+
+
+
+        var post_data=$("#post_data").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "createdRow":function () {
+                check_switch=1;
+            },
+            "ajax": "/admin/post_json",
+            "columns": [
+                {
+                    "data": "_id",
+                    className:'post_check',
+                    //defaultContent: '<div class="form-group"><label><input type="checkbox" class="minimal"></label></div>',
+                    "render": function ( data, type, full, meta ) {
+                        return '<input type="checkbox" class="minimal" value="'+data+'">';
+                    },
+                    orderable: false
+                },
+                {"data": "_id",
+                    className:'edit_a',
+                    "render": function ( data, type, full, meta ) {
+                        return '<a href="post_edit?id='+data+'"><i class="fa fa-edit"></i><span class="pull-right-container"></span>编辑</a>&nbsp;&nbsp;&nbsp;<a target="_blank" href="/p/'+data+'"><i class="fa fa-eye"></i><span class="pull-right-container"></span>查看文章</a>';
+                    }
+                },
+                {
+                    "data": "_id",
+                    className:'_id'
+                },
+                { "data": "post_title" },
+
+                { "data": "category" },
+                {
+                    "data": "time",
+                    className:'time'
+                }
+            ]
+
+        });
+
+
+
+        var check_switch=1;
+    //全选按钮
+    (function () {
+
+        $('#allcheck').click(function () {
+            if(check_switch){
+                $('#post_data input[type=checkbox]').prop("checked", true);
+                check_switch=0;
+            }else{
+                $('#post_data input[type=checkbox]').prop("checked", false);
+                check_switch=1;
+            }
+
+        });
+    })();
+
+
+
+
+    //删除按钮
+    $('#delete_post').click(function () {
+          var ids = [];
+          $('#post_data input[type=checkbox]:checked').each(function (a,b) {
+              //console.log(b.value)
+              ids[a]=parseFloat(b.value);
+          });
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: '600px',
+                skin: 'layui-layer-nobg', //没有背景色
+                content: $('#delete_warning')
+            });
+
+
+
+
+            $('#delete_ok').click(function () {
+                $.ajax({
+                    url:"/admin/remove_post",
+                    type:'post',
+                    async:false,
+                    dataType : 'json',
+                    data:{remove_id:ids},
+                    success:function (data) {
+//                        layer.close(layer.index);
+//                        post_data.ajax.url( '/admin/post_json' ).load();
+                       window.location.reload();
+                    }
+                });
+            });
+    });
+
+
+
+
+
+
+
+
+</script>

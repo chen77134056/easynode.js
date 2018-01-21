@@ -1,0 +1,512 @@
+
+<!--文章添加删除-->
+
+
+
+
+
+
+
+<style type="text/css">
+    #div1 {
+        width: 100%;
+        height: 500px;
+    }
+    .wangEditor-container .wangEditor-txt p{line-height: 20px;margin: 0;}
+    .dialog-button{text-align: center;}
+    .add_post_iframe{border: 0;height: 30px;}
+    .upload_list p{margin: 0;padding: 0;}
+    .datagrid-btable .datagrid-cell{padding:6px 4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+    #time_p{display: none;}
+</style>
+<table id="post_list"></table>
+<div id="post_list_tool" style="padding:5px;">
+    <div style="margin-bottom:5px;">
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="post_list_tool.reload();">刷新</a>-->
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add-new" onclick="post_list_tool.add();">添加</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-edit-new"  onclick="post_list_tool.edit();">修改</a>-->
+        <a href="#" class="easyui-linkbutton" iconCls="icon-delete-new" onclick="post_list_tool.remove();">删除</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" id="save" onclick="obj.save();">保存</a>-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" id="redo" onclick="obj.redo();">取消编辑</a>-->
+    </div>
+    <div style="padding:0 0 0 7px;color:#333;">
+        查询内容：
+        <!--<input type="text" class="textbox" name="search_title" style="width:150px">-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="post_list_tool.search();">查询</a>-->
+        <input name="search_title" class="easyui-searchbox textbox" data-options="searcher:doSearch" style="width:300px"></input>
+
+        <script>
+            function doSearch(value){
+                post_list_tool.search();
+            }
+        </script>
+    </div>
+</div>
+
+
+
+
+
+<!--添加文章弹窗-->
+<form id="post_add" fit="true" enctype="multipart/form-data" style="margin:0;padding:5px 0 0 25px;color:#333;">
+
+    <table width="100%" border="0">
+        <tr>
+            <td style="width: 300px;">    文章标题：<input type="text" name="post_title" class="textbox" style="width: 201px;"> </td>
+            <td rowspan="3">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="position: relative;width: 150px">
+                           开启定时发布： <input type="checkbox" name="future_time_switch" id="future_time_switch">
+                            <p>&nbsp;</p>
+                            <span id="time_p" style="position: absolute;top: 40px;left: -23px;"><input class="easyui-datetimebox" id="future_time" required style="width:140px"></span>
+
+
+
+
+                        </td>
+
+                        <td><div class="upload_list" style="height: 90px;overflow-y: scroll;position: relative;"></div></td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td>    文章分类：<input id="category2" class="textbox" name="category" style="width:205px;">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <table>
+                    <tr>
+                        <td valign="middle" nowrap="nowrap">上传附件：</td>
+                        <td valign="middle"><iframe scrolling="no" class="add_post_iframe" name="ifrmname" width="200" src="/admin/haha"></iframe></td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+    <div id="div1" style="height:500px;"></div>
+</form>
+
+
+
+
+
+
+<!--编辑文章弹窗-->
+<form id="post_edit" fit="true" style="margin:0;padding:5px 0 0 25px;color:#333;">
+    <!--<p>文&nbsp;章&nbsp;I&nbsp;D：<input type="text" value="" name="post_id" id="post_id" readonly="readonly" class="textbox"></p>-->
+    <!--<p>文章标题：<input type="text" name="post_title" class="textbox" id="edit_title"></p>-->
+    <!--<p>文章分类：<input id="category3" class="textbox" name="category" style="width:205px;"> &nbsp; &nbsp;&nbsp;   发布时间：<input type="text" name="post_time" class="textbox" id="post_time" readonly="readonly"></p>-->
+
+
+
+
+    <table width="100%" border="0">
+        <tr>
+            <td style="width: 350px;">文&nbsp;章&nbsp;I&nbsp;D：<input type="text" value="" name="post_id" id="post_id" readonly="readonly" class="textbox"></td>
+            <td>发布时间：<input type="text" name="post_time" class="textbox" id="post_time" readonly="readonly"></td>
+        </tr>
+        <tr>
+            <td>文章标题：<input type="text" name="post_title" class="textbox" id="edit_title" style="width: 201px;"></td>
+            <td rowspan="3">
+                <div class="upload_list" style="height: 90px;overflow-y: scroll;position: relative;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="middle" nowrap="nowrap">文章分类：<input id="category3" class="textbox" name="category" style="width:205px;"></td>
+        </tr>
+        <tr>
+            <td valign="middle"><iframe scrolling="no" class="add_post_iframe" name="ifrmname" width="200" src="/admin/haha"></iframe></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div id="div2" style="height:500px;"></div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+<div id="media2">
+    <div id="media_list2"></div>
+</div>
+
+
+
+<div id="media_list_tool2" style="padding:5px;">
+    <div style="margin-bottom:5px;">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add-new" plain="true" onclick="post_list_tool.add();">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit-new" plain="true" onclick="post_list_tool.edit();">修改</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-delete-new" plain="true" onclick="post_list_tool.remove();">删除</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" id="save" onclick="obj.save();">保存</a>-->
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" id="redo" onclick="obj.redo();">取消编辑</a>-->
+    </div>
+    <div style="padding:0 0 0 7px;color:#333;">
+        查询内容：<input type="text" class="textbox" name="search_title" style="width:150px">
+        <!--创建时间从：<input type="text" name="date_from" class="easyui-datebox" editable="false" style="width:110px">-->
+        <!--到：<input type="text" name="date_to" class="easyui-datebox" editable="false" style="width:110px">-->
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="post_list_tool.search();">查询</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    function reload_media(){
+        $('#media_list').datagrid({
+            url : 'media_list',
+            fit : true,
+            fitColumns : true,
+            striped : true,
+            rownumbers : true,
+            border : false,
+            pagination : true,
+            pageSize : 5,
+            pageList : [5,10, 20, 30, 40, 50],
+            pageNumber : 1,
+            sortName : 'date',
+            sortOrder : 'desc',
+            toolbar : '#media_list_tool',
+            remoteSort:true,
+            columns : [[
+                {
+                    field : '_id',
+                    title : '自动编号',
+                    width:'auto',
+                    checkbox : true
+                },
+                {
+                    field : 'img',
+                    title : '图片',
+                    align : 'center',
+                    width:'auto',
+                    formatter:function(value,row){
+                        console.log(row.file_name.split('.')[1])
+                        // var str = "";
+                        // if(value!="" || value!=null){
+                        //
+                        //     str = "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/images/"+row.file_name+"\"/>";
+                        //
+                        //     return str;
+                        // }
+
+
+
+                        var type=row.file_name.split('.')[1];
+                        switch (true)
+                        {
+                            case type=='rar':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/rar.png \"/>";
+                                break;
+                            case type=='zip':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/zip.png \"/>";
+                                break;
+                            case type=='html':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/html.png \"/>";
+                                break;
+                            case type=='css':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/css.png \"/>";
+                                break;
+                            case type=='gif':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/gif.png \"/>";
+                                break;
+                            case type=='text':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/text.png \"/>";
+                                break;
+                            case type=='pptx':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/pptx.png \"/>";
+                                break;
+                            case type=='ppt':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/pptx.png \"/>";
+                                break;
+                            case type=='docx':
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/docx.png \"/>";
+                                break;
+                            case type=='jpg' || type=='gif' || type=='png' || type=='bmp' || type=='jpeg':
+                                return "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/images/"+row.file_name+"\"/>";
+                                break;
+                            default:
+                                return  "<img style=\"height: 80px;width: auto\" src=\""+window.location.protocol+"//"+window.location.host+"/icons/other.png \"/>";
+                                break;
+                        }
+
+
+                    }
+
+                },
+
+                {
+                    field : 'file_name',
+                    title : '地址',
+                    //width : 80
+                },
+
+
+                {
+                    field : 'time',
+                    title : '时间',
+                    //width : 80
+                }
+            ]]
+        });
+    }
+
+
+
+
+    function upload_success() {
+        console.log('1```');
+    }
+
+
+
+
+
+    // 封装console.log
+    function printLog(title, info) {
+        window.console && console.log(title, info);
+    }
+
+    // ------- 配置上传的初始化事件 -------
+    function uploadInit () {
+        // this 即 editor 对象
+        var editor2 = this;
+        // 编辑器中，触发选择图片的按钮的id
+        var btnId = editor2.customUploadBtnId;
+        // 编辑器中，触发选择图片的按钮的父元素的id
+        var containerId = editor2.customUploadContainerId;
+
+        //实例化一个上传对象
+        var uploader = new plupload.Uploader({
+            browse_button: btnId,  // 选择文件的按钮的id
+            url: '/admin/upload',  // 服务器端的上传地址
+            flash_swf_url: '/plupload/lib/plupload/Moxie.swf',
+            sliverlight_xap_url: '/plupload/lib/plupload/Moxie.xap',
+            filters: {
+                mime_types: [
+                    //只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
+                    { title: "图片文件", extensions: "jpg,gif,png,bmp" }
+                ]
+            }
+        });
+
+        //存储所有图片的url地址
+        var urls = [];
+
+        //初始化
+        uploader.init();
+
+        //绑定文件添加到队列的事件
+        uploader.bind('FilesAdded', function (uploader, files) {
+            //显示添加进来的文件名
+            $.each(files, function(key, value){
+                printLog('添加文件' + value.id);
+            });
+
+            // 文件添加之后，开始执行上传
+            uploader.start();
+        });
+
+        //单个文件上传之后
+        uploader.bind('FileUploaded', function (uploader, file, responseObject) {
+            //注意，要从服务器返回图片的url地址，否则上传的图片无法显示在编辑器中
+            var url = responseObject.response;
+            //先将url地址存储来，待所有图片都上传完了，再统一处理
+            urls.push(url);
+
+            printLog('一个图片上传完成，返回的url是' + url);
+            reload_media();
+        });
+
+        //全部文件上传时候
+        uploader.bind('UploadComplete', function (uploader, files) {
+            printLog('所有图片上传完成');
+            reload_media();
+            // 用 try catch 兼容IE低版本的异常情况
+            try {
+                //打印出所有图片的url地址
+                console.log(urls)
+                $.each(urls, function (key, value) {
+                    printLog('即将插入图片' + value);
+
+                    // 插入到编辑器中
+                    //editor2.command(null, 'insertHtml', '<img src="' + value + '" style="max-width:100%;"/>');
+                    editor2.$txt.append('<img src="'+ window.location.protocol+ '//'+ window.location.host+'/images/' + value + '" style="max-width:100%;"/>');
+                   // $('#media_list').datagrid('reload');
+                });
+            } catch (ex) {
+                // 此处可不写代码
+            } finally {
+                //清空url数组
+                urls = [];
+
+                // 隐藏进度条
+                editor2.hideUploadProgress();
+            }
+        });
+
+        // 上传进度条
+        uploader.bind('UploadProgress', function (uploader, file) {
+            // 显示进度条
+            editor2.showUploadProgress(file.percent);
+        });
+    }
+
+
+    // ------- 创建编辑器 -------
+    var editor2 = new wangEditor('div2');
+    editor2.config.customUpload = true;  // 配置自定义上传的开关
+    editor2.config.customUploadInit = uploadInit;  // 配置上传事件，uploadInit方法已经在上面定义了
+    editor2.create();
+
+
+
+
+
+
+
+
+
+
+
+function printLog(title, info) {
+    window.console && console.log(title, info);
+}
+
+// ------- 配置上传的初始化事件 -------
+function uploadInit () {
+    // this 即 editor 对象
+    var editor = this;
+    // 编辑器中，触发选择图片的按钮的id
+    var btnId = editor.customUploadBtnId;
+    // 编辑器中，触发选择图片的按钮的父元素的id
+    var containerId = editor.customUploadContainerId;
+
+    //实例化一个上传对象
+    var uploader = new plupload.Uploader({
+        browse_button: btnId,  // 选择文件的按钮的id
+        url: '/admin/upload',  // 服务器端的上传地址
+        flash_swf_url: '/plupload/lib/plupload/Moxie.swf',
+        sliverlight_xap_url: '/plupload/lib/plupload/Moxie.xap',
+        filters: {
+            mime_types: [
+                //只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
+                { title: "图片文件", extensions: "jpg,gif,png,bmp" }
+            ]
+        }
+    });
+
+    //存储所有图片的url地址
+    var urls = [];
+
+    //初始化
+    uploader.init();
+
+    //绑定文件添加到队列的事件
+    uploader.bind('FilesAdded', function (uploader, files) {
+        //显示添加进来的文件名
+        $.each(files, function(key, value){
+            printLog('添加文件' + value.id);
+        });
+
+        // 文件添加之后，开始执行上传
+        uploader.start();
+    });
+
+    //单个文件上传之后
+    uploader.bind('FileUploaded', function (uploader, file, responseObject) {
+        //注意，要从服务器返回图片的url地址，否则上传的图片无法显示在编辑器中
+        var url = responseObject.response;
+        //先将url地址存储来，待所有图片都上传完了，再统一处理
+        urls.push(url);
+
+        printLog('一个图片上传完成，返回的url是' + url);
+        reload_media();
+    });
+
+    //全部文件上传时候
+    uploader.bind('UploadComplete', function (uploader, files) {
+        printLog('所有图片上传完成');
+        reload_media();
+        // 用 try catch 兼容IE低版本的异常情况
+        try {
+            //打印出所有图片的url地址
+            console.log(urls)
+            $.each(urls, function (key, value) {
+                printLog('即将插入图片' + value);
+
+                // 插入到编辑器中
+                //editor.command(null, 'insertHtml', '<img src="' + value + '" style="max-width:100%;"/>');
+                editor.$txt.append('<img src="'+ window.location.protocol+ '//'+ window.location.host+'/images/' + value + '" style="max-width:100%;"/>');
+
+            });
+        } catch (ex) {
+            // 此处可不写代码
+        } finally {
+            //清空url数组
+            urls = [];
+
+            // 隐藏进度条
+            editor.hideUploadProgress();
+        }
+    });
+
+    // 上传进度条
+    uploader.bind('UploadProgress', function (uploader, file) {
+        // 显示进度条
+        editor.showUploadProgress(file.percent);
+    });
+}
+
+
+// ------- 创建编辑器 -------
+var editor = new wangEditor('div1');
+editor.config.customUpload = true;  // 配置自定义上传的开关
+editor.config.customUploadInit = uploadInit;  // 配置上传事件，uploadInit方法已经在上面定义了
+editor.create();
+
+
+</script>
+<script type="text/javascript" src="/javascripts/admin_right.js"></script>
+
+
+
+
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js" ></script>
+<script>
+    $.fn.datebox.defaults.formatter = function(date){
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        var d = date.getDate();
+        return y+'-'+m+'-'+d;
+    }
+
+    $('#future_time_switch').click(function () {
+
+        $('#time_p').toggle();
+    })
+
+
+</script>

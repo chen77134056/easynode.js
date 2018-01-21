@@ -1,0 +1,55 @@
+[{
+	"text": "系统模块",
+	"state": "open",
+	"children": [{
+                    "id": "j1",
+                    "text": "管理员",
+                    "url":"/post"
+                },
+                {
+                    "id": "j2",
+                    "text": "所有文章",
+                    "url":"/postlist"
+                },
+                {
+                    "id": "j3",
+                    "text": "文章分类",
+                    "url":"/category"
+                },
+                 {
+                     "id": "j4",
+                     "text": "链接",
+                     "url":"/link"
+                 }
+                ]
+
+
+
+},
+{
+   "text": "媒体库",
+   "state": "open",
+   "children": [{
+         "id": "j3",
+         "text": "全部",
+         "url":"/media"
+     }]
+}
+,
+{
+	"text": "设置",
+	"state": "open",
+	"children": [{
+                    "id": "j3",
+                    "text": "常规",
+                    "url":"/routine"
+                },
+                {
+                    "id": "j4",
+                    "text": "C#"
+                }]
+
+
+
+}
+]
