@@ -1,7 +1,7 @@
 var router = require('koa-router')();
 
 var filter=require('./admin/filter'); //过滤、检测危险字符
-var shell=require('./mongodb_shell'); //过滤、检测危险字符
+var shell=require('./mongodb_shell'); //封装mongodb获取数据函数
 
 
 import session from "koa2-cookie-session";
@@ -70,6 +70,8 @@ function shadowCopy(src,obj,ctx) {
         }
     }
 
+
+
     return dst;
 }
 
@@ -117,9 +119,9 @@ function pub_fn2(src,obj) {
     }
 
 
-    shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
-    shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
-    shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
+
+
+
 
     return dst;
 }
@@ -168,8 +170,9 @@ router
             await shell.get_category(obj);
             await shell.get_nav(obj);
 
-
-
+            await shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
+            await shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
+            await shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
 
             //3,这部分把obj上的属性值准备打印到前端页面上
             await new Promise((a,b)=>{
@@ -217,6 +220,10 @@ router
               await shell.limit_post(obj);
               await shell.get_category(obj);
               await shell.get_nav(obj);
+
+                await shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
+                await shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
+                await shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
 
 
               await new Promise((a,b)=>{
@@ -266,6 +273,9 @@ router.get('p/:p_id', async function (ctx, next) {
     await shell.get_category(obj);
     await shell.get_nav(obj);
 
+    await shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
+    await shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
+    await shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
 
 
     await new Promise((a,b)=>{
@@ -322,6 +332,10 @@ router
         await shell.search_limit_str(obj);
         await shell.get_category(obj);
         await shell.get_nav(obj);
+
+        await shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
+        await shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
+        await shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
 
 
         await new Promise((a,b)=>{
@@ -384,6 +398,10 @@ router
         await shell.get_category(obj);
         await shell.get_nav(obj);
 
+
+        await shell.complex_category_limit_list('成人',3,obj,0);//<-------执行程序，将值赋值给obj属性中
+        await shell.complex_category_limit_list('其他',5,obj,1);//<-------执行程序，将值赋值给obj属性中
+        await shell.complex_category_limit_list('添加分类',5,obj,2);//<-------执行程序，将值赋值给obj属性中
 
 
         await new Promise((a,b)=>{

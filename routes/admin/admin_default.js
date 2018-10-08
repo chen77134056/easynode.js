@@ -547,7 +547,7 @@ router.post('/routine_time',async function (ctx,next) {
         await new Promise((a,b)=>{
 
             db.get('admin').find({}).then((doc)=>{
-                    console.log(ctx.request.body.pass);
+
                     if(ctx.request.body.pass.length==44){
                         if(doc[0].user==filter.html2Escape(ctx.request.body.user) && doc[0].pass==ctx.request.body.pass && filter.html2Escape(ctx.request.body.code_img)==(ctx.session.captcha).toLowerCase()){
                             ctx.session.user = {loginstate: "1"};
@@ -821,7 +821,7 @@ router.post('/edit_post',async function (ctx,next) {
 
 
     await new Promise((a,b)=>{
-            console.log('num:'+num);
+
             db.get('post').find({"_id":parseInt(ctx.request.body.post_id)},'-_id').then((doc)=>{
                 //3,更新修改的文章
                 db.get('post').findOneAndUpdate(doc[0], {
@@ -839,9 +839,9 @@ router.post('/edit_post',async function (ctx,next) {
                                 let text=cat_data[0].text;
                                 let count=cat_data[0].count;
                                 db.get('category').update(cat_data[0] ,{ _id: _id, text:text, count: ++count } ).then(()=>{
-                                    console.log('y:'+((doc.category).split(',')).length);
+
                                     ++num;
-                                    console.log('num:'+num);
+
                                     if(num=>((doc.category).split(',')).length){
                                         ctx.body='1';
                                         a();
@@ -1206,7 +1206,7 @@ router.post('/upload2',
         koaBody({
             multipart: true,
             formidable: {
-                uploadDir:path.join(process.cwd(), '/public/uploads/'+moment().format('YYYY')+'/'+moment().format('MM'))
+                uploadDir:path.join(process.cwd(), '/public/uploads/'+moment().format('YYYY')+'/'+moment().format('MM'))  //根据系统时间也相应生成目录，如2019/10/11的目录
             }
         }),
     async function (ctx,next) {
@@ -1215,10 +1215,18 @@ router.post('/upload2',
 
                     if((ctx.request.body.files['uploads']).length>1){
 
+
+                        //var str ='uploads'+((ctx.request.body.files['uploads']).path).split('uploads')[1]+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1];
+
+
                         var url_arry = (ctx.request.body.files['uploads']).map(url => {
+                             //console.log(url);
 
                             if(  /(.rar)|(.zip)|(.gif)|(.pptx)|(.ppt)|(.docx)|(.jpg)|(.png)|(.bmp)|(.jpeg)$/.test(url.name) ){
-                                return  {src0:url.path,src1:url.path+'.'+((url.name).split('.'))[((url.name).split('.')).length-1]}
+                                return  {
+                                    src0:url.path,  //E:\\xxx\\\upload_f5235b695ebb64c179d65e78d1c06041
+                                    src1:url.path+'.'+((url.name).split('.'))[((url.name).split('.')).length-1]
+                                }
                             }else{
                                 ctx.body='0';
                                 a();
@@ -1230,6 +1238,7 @@ router.post('/upload2',
                         var i=0;
                         var arr=[]; //将上传成功的文件插入数组
                         function self() {
+                            
 
                             db.get('counters').find().then((docs)=>{
                                 var _id=docs[4].media_value;
@@ -1238,7 +1247,7 @@ router.post('/upload2',
                                 }
                                 db.get('media').insert({
                                     "_id":autoadd(),
-                                    file_name:moment().format('YYYY')+'/'+moment().format('MM')+'/'+((url_arry[i].src1).split('/'))[((url_arry[i].src1).split('/')).length-1],
+                                    file_name:url_arry[i].src1.split('public')[1].slice(1),
                                     time:moment().format('YYYY-MM-DD kk:mm:ss')
                                 }).then((doc)=>{
 
@@ -1265,20 +1274,23 @@ router.post('/upload2',
 
                     }else{
 
-                        var str =(ctx.request.body.files['uploads']).path+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1];
-                        //ctx.body=ctx.protocol+'://'+ctx.host+'/images/'+((str).split('/'))[((str).split('/')).length-1];
+                       // var str =(ctx.request.body.files['uploads']).path+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1];
+                        var str ='uploads'+((ctx.request.body.files['uploads']).path).split('uploads')[1]+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1];
+                       // console.log( 'uploads'+((ctx.request.body.files['uploads']).path).split('uploads')[1]+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1] );
 
 
                         db.get('counters').find().then((docs)=>{
+
                             var _id=docs[4].media_value;
                             function autoadd() {
                                 return ++_id;
                             }
                             db.get('media').insert({
                                 "_id":autoadd(),
-                                file_name:moment().format('YYYY')+'/'+moment().format('MM')+'/'+((str).split('/'))[((str).split('/')).length-1],
+                                file_name:str,
                                 time:moment().format('YYYY-MM-DD kk:mm:ss')
                             }).then((doc)=>{
+
                                 db.get('counters').update(   {media_value:docs[4]["media_value"]},{media_value:doc["_id"]}   ).then(()=>{
                                     fs.renameSync(  (ctx.request.body.files['uploads']).path ,(ctx.request.body.files['uploads']).path+'.'+(((ctx.request.body.files['uploads']).name).split('.'))[(((ctx.request.body.files['uploads']).name).split('.')).length-1]); //重命名
                                     ctx.body=((str).split('/'))[((str).split('/')).length-1];
@@ -1790,7 +1802,7 @@ router.post('/home_nav',async function (ctx,next) {
 router.post('/get_nav',async function (ctx,next) {
     await new Promise((a,b)=>{
         db.get('nav').find({}).then((doc)=>{
-            console.log(doc);
+
             ctx.body=doc;
             a();
         });

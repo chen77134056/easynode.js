@@ -137,6 +137,7 @@ function complex_category_limit_list(str,num,obj,i) {  //例如：('动画',5,ob
         sort: {"_id": -1},
         limit: parseFloat(num)
     }).then((limit_doc1) => {
+
         obj.category_limit_list_arry[i]=limit_doc1;
 
     });

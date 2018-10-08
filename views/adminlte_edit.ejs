@@ -520,7 +520,7 @@
                 $(data).each(function (index,value) {
 
                     if(new RegExp('jpg|png|gif|jpge|bmp','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/uploads/'+value.file_name+'" alt="User Image"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/'+value.file_name+'" alt="User Image"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
                     }else if(new RegExp('rar','i').test(value.file_name)){
                         $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/rar.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
                     }else if(new RegExp('zip','i').test(value.file_name)){

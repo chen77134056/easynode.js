@@ -17,31 +17,37 @@
             <div>新闻</div>
             <div>分类</div>
         </div>
+
         <ul class="tab_con show">
 
             <%  (function(num){ %>
-                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
-                      <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
-                <%  }%>
+            <% console.log(category_limit_list_arry) %>
+            <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+            <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+            <%  }%>
             <%})(1);%>
 
         </ul>
+
+
+
         <ul class="tab_con">
             <%  (function(num){ %>
-                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
-                  <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
-                <%  }%>
+            <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+            <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+            <%  }%>
             <%})(0);%>
         </ul>
 
 
         <ul class="tab_con">
             <%  (function(num){ %>
-                <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
-                   <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
-                <%  }%>
+            <% for(var i=0;i<category_limit_list_arry[num].length;i++){%>
+            <li><a href="/p/<%= category_limit_list_arry[num][i]._id %>"><%-category_limit_list_arry[num][i].post_title%></a></li>
+            <%  }%>
             <%})(2);%>
         </ul>
+
 
 
     </div>

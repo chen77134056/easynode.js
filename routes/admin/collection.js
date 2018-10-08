@@ -48,7 +48,7 @@ function htmlDecode(str) {   // unicode to  ascill
 
 // 单篇文章路由
 router.post('/single_collection', async function (ctx, next) {
-                console.log('1111111111');
+
                 var obj={
                     post_title: '',
                     post_time: '',
@@ -137,7 +137,7 @@ router.post('/single_collection', async function (ctx, next) {
                 //------------开始插入文章-------------------
                 await   //1,获取到post_id
                     db.get('counters').find({$or:[{"_id":new RegExp('postid','ig')}]}).then((docs)=>{
-                        //console.log( (htmlDecode( obj.post_content ).replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi,'<img src="/images/">')) );
+
                         db.get('post').insert([    //2，插入文章数据
                             {
                                 "_id":docs[0]["post_value"]+1,
@@ -170,7 +170,7 @@ router.post('/single_collection', async function (ctx, next) {
                             let text=cat_data[0].text;
                             let count=cat_data[0].count;
                             db.get('category').update(cat_data[0] ,{ "_id": _id, text:text, count: count+1 } ).then(()=>{
-                                //console.log((++ok)+'<-------------');
+
                                 ++ok
                                 if( ((obj.insert_post[0].category).split(',')).length == ok){a();}
                             })
@@ -239,7 +239,7 @@ router.post('/all_collection', async function (ctx, next) {
 
                         //先判断第一页从哪个索引开始采集
                         if(  new RegExp('^'+obj.start_page+'$','i').test(parseFloat(url.split(ctx.request.body.key_word)[1])) ){
-                            console.log(((obj.end_page-obj.start_page+1)*ctx.request.body.page_total_num)-(ctx.request.body.start_url_id)-(ctx.request.body.page_total_num-1-ctx.request.body.end_url_id));
+
                             request({
                                 method: 'get',
                                 uri: url,
@@ -250,21 +250,21 @@ router.post('/all_collection', async function (ctx, next) {
                                         total++;
 
                                         if(total>=  ((obj.end_page-obj.start_page+1)*ctx.request.body.page_total_num)-(ctx.request.body.start_url_id)-(ctx.request.body.page_total_num-1-ctx.request.body.end_url_id) ){  //这里的10是一共要采集的详细页url,这里为了测试我只用了，两个分页，每个分页一共5条连接
-                                            // console.log(total+'<----------------');
+
                                             url_des.push(el.attribs.href);
                                             total=undefined;
-                                            console.log('开始结束'+total);
+
                                             url_des_switch=false;
                                             a();
                                         }else{
-                                            console.log('开始'+total);
+
                                             url_des.push(el.attribs.href);
 
                                         }
 
                                     });
                                 }else{
-                                    console.log('已经5秒了超时了'+url);
+
                                     (function () {
                                         for(var i=0;i<ctx.request.body.end_url_id-ctx.request.body.start_url_id+1;i++){
                                             total++;
@@ -287,20 +287,20 @@ router.post('/all_collection', async function (ctx, next) {
                                         total++;
 
                                         if(total>=  ((obj.end_page-obj.start_page+1)*ctx.request.body.page_total_num)-(ctx.request.body.start_url_id)-(ctx.request.body.page_total_num-1-ctx.request.body.end_url_id) ){  //这里的10是一共要采集的详细页url,这里为了测试我只用了，两个分页，每个分页一共5条连接
-                                            console.log(total+'<----------------');
+
                                             url_des.push(el.attribs.href);
                                             total=undefined;
-                                            console.log('最后结束'+total);
+
                                             url_des_switch=false;
                                             a();
                                         }else{
-                                            console.log('最后'+total);
+
                                             url_des.push(el.attribs.href);
 
                                         }
                                     });
                                 }else{
-                                    console.log('已经5秒了超时了'+url);
+
                                     (function () {
                                         for(var i=0;i<ctx.request.body.end_url_id;i++){
                                             total++;
@@ -320,14 +320,14 @@ router.post('/all_collection', async function (ctx, next) {
                                         total++;
 
                                         if(total>=  ((obj.end_page-obj.start_page+1)*ctx.request.body.page_total_num)-(ctx.request.body.start_url_id)-(ctx.request.body.page_total_num-1-ctx.request.body.end_url_id) ){  //这里的10是一共要采集的详细页url,这里为了测试我只用了，两个分页，每个分页一共5条连接
-                                            console.log(total+'<----------------');
+
                                             url_des.push(el.attribs.href);
                                             total=undefined;
-                                            console.log('中间结束'+total);
+
                                             url_des_switch=false;
                                             a();
                                         }else{
-                                            console.log('中间'+total+'------vs---');
+
                                             url_des.push(el.attribs.href);
 
                                         }
@@ -335,7 +335,7 @@ router.post('/all_collection', async function (ctx, next) {
 
                                     });
                                 }else{
-                                    console.log('已经5秒了超时了'+url);
+
                                     (function () {
                                         for(var i=0;i<5;i++){
                                             total++;
@@ -363,7 +363,7 @@ router.post('/all_collection', async function (ctx, next) {
 
         var state=true;
 
-        console.log(url_des);
+
        // for(var i=0;i<obj.url_des.length;i++){
             function auto_add() {
                         request({
@@ -440,7 +440,7 @@ router.post('/all_collection', async function (ctx, next) {
 
                                 }
                             }else{
-                                console.log('超时重新发出请求');
+
                                 url_des.shift();  //
                                 auto_add();
                             }
