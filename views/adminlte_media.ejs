@@ -217,7 +217,7 @@
                     "render": function ( data, type, full, meta ) {
 
                         if(new RegExp('jpg|png|gif|jpge|bmp','i').test(data)){
-                            return '<img height="60" src="/uploads/'+data+'">';
+                            return '<img height="60" onload="this.width>this.height?$(this).attr({width:60}):$(this).attr({height:60})" src="/'+data+'">';
                         }else if(new RegExp('rar','i').test(data)){
                             return '<img height="60" src="/icons/rar.png">';
                         }else if(new RegExp('zip','i').test(data)){

@@ -1238,7 +1238,7 @@ router.post('/upload2',
                         var i=0;
                         var arr=[]; //将上传成功的文件插入数组
                         function self() {
-                            
+
 
                             db.get('counters').find().then((docs)=>{
                                 var _id=docs[4].media_value;
@@ -1699,13 +1699,12 @@ router.post('/remove_media',async function (ctx,next) {
     await new Promise((a,b)=>{
         for(let i=0;i<(ctx.request.body.remove_id).length;i++){
             db.get('media').find({"_id":parseInt((ctx.request.body.remove_id)[i])}).then((docs)=>{
-
-                fs.realpath('./public/uploads/'+docs[0].file_name,function (err,file_path) {
+                fs.realpath('./public/'+docs[0].file_name,function (err,file_path) {
                     if(err){
                         throw err;
                     }else {
 
-                       fs.unlink(file_path,function (err) {
+                       fs.unlink(file_path,function (err) {  //删除文件操作
 
                        })
                     }
@@ -1717,14 +1716,11 @@ router.post('/remove_media',async function (ctx,next) {
 
 
     await new Promise((a,b)=>{
-
-
         for(let i=0;i<(ctx.request.body.remove_id).length;i++){
-            db.get('media').remove({"_id":parseInt((ctx.request.body.remove_id)[i])});
+            db.get('media').remove({"_id":parseInt((ctx.request.body.remove_id)[i])});  //删除数据库操作
         }
         ctx.body='1';a();
     });
-
 
 
 });

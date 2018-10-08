@@ -518,47 +518,50 @@
                 data.shift();
                 $('#show_media_list .box-body li').remove();
                 $(data).each(function (index,value) {
-
+               
+                    var file_name=value.file_name.split('\\')[3];
                     if(new RegExp('jpg|png|gif|jpge|bmp','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/'+value.file_name+'" alt="User Image"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/'+value.file_name+'" alt="User Image"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('rar','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/rar.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/rar.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('zip','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/zip.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/zip.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('html','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/html.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/html.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('css','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/css.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/css.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('gif','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/gif.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/gif.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('text','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/text.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/text.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('pptx','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/pptx.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/pptx.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('ppt','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/ppt.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/ppt.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else if(new RegExp('docx','i').test(value.file_name)){
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/docx.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/docx.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }else{
-                        $('#show_media_list .box-body').append('<li data-clickstate="1"><img src="/icons/other.png"><a class="users-list-name" href="#">'+((value.file_name).split('/'))[(value.file_name).split('/').length-1]+'</a></li>');
+                        $('#show_media_list .box-body').append('<li data-realurl="'+value.file_name+'" data-clickstate="1"><img src="/icons/other.png"><a class="users-list-name" href="#">'+file_name+'</a></li>');
                     }
                 });
 
 
                 $('#show_media_list .box-body li').click(function () {
-                    if(  parseFloat($(this).data('clickstate'))  ){ //选中
+
+                    if(  parseFloat($(this).data('clickstate'))==1  ){ //选中
                         $(this).css({border:'1px solid #ccc'});
                         $(this).data('clickstate','0');
-                        console.log();
+
 
                         if(new RegExp('jpg|png|gif|jpge|bmp','i').test($(this).find('a').text())){
                             img_arry.push('<img src="'+$(this).find('img').attr('src')+'">');
                         }else{
-                            img_arry.push('<a href="/uploads/'+$(this)[0].innerText+'">'+$(this)[0].innerText+'</a>');
+                            img_arry.push('<a href=/'+$(this).data('realurl')+'>'+$(this)[0].innerText+'</a>');
                         }
 
                     }else{
-                        var current=$(this).find('a').text();
+                        img_arry=[];
+                        var current=$(this).data('realurl');
                         $(this).css({border:'1px solid #fff'});  //不选中
                         $(this).data('clickstate','1');
 
